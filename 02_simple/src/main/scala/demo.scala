@@ -16,6 +16,7 @@ object demo {
 
     val conf = new SparkConf().setMaster("spark://apple.local:7077").setAppName("Reading CSV file and then Printing it")
     val sc = new SparkContext(conf)
+    val sqlc = new SQLContext(sc);
 
     //创建一个名为logData的RDD对象
     val user = sc.textFile(path);
@@ -28,13 +29,22 @@ object demo {
     };
     result.collect().foreach( x => { x.foreach(println);println("--------------")});
     
-    println("---------------------SparkSQL Load方式来读取CSV文件 -------------------");
+    
+    println("---------------------SparkSQL Load方式来读取CSV文件，结果集就是一个DataFrame -------------------");
     val sqlcontext = new SQLContext(sc);
     val df = sqlcontext.load("com.databricks.spark.csv", Map("path" -> "file:///Users/apple/user.csv", "header" -> "true"));
     
+    
     val result2 = df.select("name");
     result2.collect().foreach(println);
+    
+     println("---------------------Dataframe注册为临时表，然后SQLContext来用SQL来操作这个临时表 ---------------");
+     df.registerTempTable("user");
+    val result3 = sqlc.sql("select * from user");
+    result3.collect().foreach(println);
   
+    
+        
     
     sc.stop()
   }
