@@ -35,6 +35,7 @@ object demo {
     val df = sqlcontext.load("com.databricks.spark.csv", Map("path" -> "file:///Users/apple/user.csv", "header" -> "true"));
     
     
+    
     val result2 = df.select("name");
     result2.collect().foreach(println);
     
