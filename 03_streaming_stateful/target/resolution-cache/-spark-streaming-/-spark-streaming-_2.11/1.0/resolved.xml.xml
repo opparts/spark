@@ -4,7 +4,7 @@
 		module="-spark-streaming-_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20170525233414"
+		publication="20170605233613"
 	>
 		<description>
 		测试Spark Streaming的测试程序

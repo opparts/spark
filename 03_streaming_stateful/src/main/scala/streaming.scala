@@ -15,7 +15,7 @@ object streaming {
     //目前只有local【2】才能收到消
     // 而且在另外一个console中，先启动nc -lk 9999 ,再提交这个job，就没有出现connection refuse的错误消息
     val conf = new SparkConf().setMaster("local[2]").setAppName("网络监听9999端口")
-    val ssc = new StreamingContext(conf, Seconds(10))
+    val ssc = new StreamingContext(conf, Seconds(5))
     
     //在有状态的情况下，需要打开检查点机制来保存容错性
     //其实相当于需要在本地保存这些临时数据（前后批次的数据，我猜的话，但是还没有看checkpoint的函数说明，后续再修改这个注释
@@ -32,22 +32,26 @@ object streaming {
     //例如： http  ，ip:10.1.1.1,  simon 
     val ipline = line.filter(_.contains("ip"));
     
-    //创建一个滑动窗口, 按5秒为一个批次，每次永远包含15秒内的所有批次（即3个批次）
-    val ipwindow = ipline.window(Seconds(15),Seconds(5));
+    //创建一个滑动窗口, 按5秒为一个批次，每次永远包含10秒内的所有批次（即2个批次）
+    //这里仅仅使用window(),下面的其他的函数就不使用了。
+    val ipwindow = ipline.window(Seconds(10),Seconds(5));
+    val key_count = ipwindow.map( x =>  ( x.split(",")(1),1 ) )
     
-    val count = ipwindow.count();
-    println("Total batch is " + count);
+    println("-----------------------")
+    val kv_rdd = key_count.reduceByKey((x,y) => x+y );
+    kv_rdd.foreachRDD(rdd => rdd.collect().foreach(println))
     
+   
     //按照csv，例如“，”逗号进行分割，然后只截取包含第2列, 并且放个计数器1，方便后面做聚合
-    val result = ipwindow.map( x =>  ( x.split(",")(1),1 ) )
-    val aggreated_access = result.reduceByKeyAndWindow(
-        {(x,y) => x + y},
-        {(x,y) => x - y},
-        Seconds(15),
-        Seconds(5)
-    )
+    //val result = ipwindow.map( x =>  ( x.split(",")(1),1 ) )
+    //val aggreated_access = result.reduceByKeyAndWindow(
+    //    {(x,y) => x + y},
+    //    {(x,y) => x - y},
+    //    Seconds(8),
+    //    Seconds(2)
+    //)
     
-    aggreated_access.foreachRDD(rdd => rdd.collect().foreach(println))
+    //aggreated_access.foreachRDD(rdd => rdd.collect().foreach(println))
     
     
     ssc.start();
