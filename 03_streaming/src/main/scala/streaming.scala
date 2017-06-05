@@ -26,6 +26,7 @@ object streaming {
     ssc.start();
     ssc.awaitTermination();
     
+    //无状态的streaming 测试作业
     
     
   }
