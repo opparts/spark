@@ -12,6 +12,7 @@ object simple {
     val sc = new SparkContext(conf)
     
     //创建一个名为logData的RDD对象
+    
     val logData = sc.textFile(logFile)
     val firstline = logData.first()
     val count = logData.count();
