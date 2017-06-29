@@ -4,6 +4,7 @@ import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.StreamingContext._
 import org.apache.spark.streaming.Seconds
+import org.apache.spark.streaming._
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.kafka._
 import org.apache.spark.SparkContext._
@@ -25,7 +26,7 @@ object streaming {
     //这个是比较推荐的方式
     //使用WAL的方式，接受到的数据会被持久化到日志中，要开启storage level
     conf.set("spark.streaming.receiver.writeAheadLog.enable","true")
-    val ssc = new StreamingContext(conf, Seconds(10))
+    val ssc = new StreamingContext(conf, Seconds(5))
     
     //Streaming标准的检查点机制
     //在有状态的情况下，需要打开检查点机制来保存容错性
@@ -39,22 +40,30 @@ object streaming {
     val topicMap = "alex_topic".split(":").map((_, 1)).toMap 
     val kafkaStream = KafkaUtils.createStream(ssc, zkQuorum, groupid, topicMap,StorageLevel.MEMORY_AND_DISK_SER)
 
+   
     
     //map(_._1)  数据是空的 null
     //map(_._2)  才是Kafka里面打入的数据  
     val lines = kafkaStream.map(_._2)
     
-    val error_information = lines.filter(_.contains("error"))
     
-    val ipwindow = error_information.window(Seconds(20),Seconds(10))
+    //val words = lines.flatMap(_.split(","))
+    val key_count = lines.map(x => ( x.split(",")(1),1 ))
+    val result = key_count.reduceByKeyAndWindow((x:Int,y:Int) => (x + y), Seconds(30), Seconds(10), 2)
+    result.print()
+    
+    
+    //val error_information = lines.filter(_.contains("error"))
+    
+    //val ipwindow = error_information.window(Seconds(20),Seconds(10))
     //按照用户名称（CSV文件的第二列）来聚合
     // 文件流中的一行     error,alex,shanghai,2014-08-25,create SO
-    val key_count = ipwindow.map( x =>  ( x.split(",")(1),1 ) )
-    val after_aggregated_result = key_count.reduceByKey((x,y) => x+y )
+    //val key_count = ipwindow.map( x =>  ( x.split(",")(1),1 ) )
+    //val after_aggregated_result = key_count.reduceByKey((x,y) => x+y )
     //Console里面顺便打印出来一下
-    after_aggregated_result.print()
+    //after_aggregated_result.print()
     //保存结果在本地
-    after_aggregated_result.saveAsTextFiles("/Users/apple/tmp/output/job-output", "txt")
+    //after_aggregated_result.saveAsTextFiles("/Users/apple/tmp/output/job-output", "txt")
     
     ssc.start()
     ssc.awaitTermination()

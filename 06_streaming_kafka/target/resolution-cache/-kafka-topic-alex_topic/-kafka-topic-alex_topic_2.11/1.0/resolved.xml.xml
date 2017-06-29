@@ -4,7 +4,7 @@
 		module="-kafka-topic-alex_topic_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20170626221405"
+		publication="20170629215702"
 	>
 		<description>
 		接受来自Kafka的消息 - Topic的名字就是alex_topic
@@ -38,6 +38,5 @@
 		<dependency org="org.apache.spark" name="spark-streaming_2.11" rev="2.1.0" conf="compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-streaming-kafka-0-8_2.11" rev="2.1.0" conf="compile->default(compile)"/>
 		<dependency org="com.yammer.metrics" name="metrics-core" rev="2.2.0" conf="compile->default(compile)"/>
-		<dependency org="com.101tec" name="zkclient" rev="0.10" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

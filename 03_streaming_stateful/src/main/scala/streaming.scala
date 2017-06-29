@@ -40,7 +40,7 @@ object streaming {
     val after_aggregated_result = key_count.reduceByKey((x,y) => x+y );
     after_aggregated_result.print()
 
-    after_aggregated_result.saveAsTextFiles("/Users/apple/tmp", "txt")
+    //after_aggregated_result.saveAsTextFiles("/Users/apple/tmp", "txt")
     
    
     //按照csv，例如“，”逗号进行分割，然后只截取包含第2列, 并且放个计数器1，方便后面做聚合
