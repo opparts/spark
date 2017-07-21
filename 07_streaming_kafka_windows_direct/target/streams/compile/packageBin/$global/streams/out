@@ -1,0 +1,19 @@
+[0m[[0minfo[0m] [0mPackaging C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\topic1-windows-version-kafka_2.11-1.0.jar ...[0m
+[0m[[0mdebug[0m] [0mInput file mappings:[0m
+[0m[[0mdebug[0m] [0m	main\scala\streaming$$anonfun$4.class[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala\streaming$$anonfun$4.class[0m
+[0m[[0mdebug[0m] [0m	main\scala\streaming.class[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala\streaming.class[0m
+[0m[[0mdebug[0m] [0m	main\scala\streaming$$anonfun$3.class[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala\streaming$$anonfun$3.class[0m
+[0m[[0mdebug[0m] [0m	main\scala\streaming$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala\streaming$$anonfun$2.class[0m
+[0m[[0mdebug[0m] [0m	main\scala\streaming$.class[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala\streaming$.class[0m
+[0m[[0mdebug[0m] [0m	main[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main[0m
+[0m[[0mdebug[0m] [0m	main\scala\streaming$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala\streaming$$anonfun$1.class[0m
+[0m[[0mdebug[0m] [0m	main\scala[0m
+[0m[[0mdebug[0m] [0m	  C:\Users\i034171\git\spark\07_streaming_kafka_windows_direct\target\scala-2.11\classes\main\scala[0m
+[0m[[0minfo[0m] [0mDone packaging.[0m
